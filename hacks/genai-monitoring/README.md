@@ -46,10 +46,10 @@ Your first task is to get the application running smoothly in your local environ
 git clone https://github.com/MKand/movie-guru.git
 cd movie-guru
 git checkout ghack-genkit-monitoring
-git checkout main -- chat_server_go frontend nginx pgvector set_env_vars.sh 
+git checkout main -- chat_server_go frontend nginx pgvector 
 ```
 
-- Edit the **set_env_vars.sh** to replace the _PROJECT_ID with your **Google Cloud** project's id.
+- Edit the **set_env_vars.sh** to replace the _PROJECT_ID_ and _REGION_ placeholders with your **Google Cloud** project's id and region. Either your _team-lead/coach_ will provide these values from the **qwiklab** lab start page.
 
 ### Step 2: Run the app
 

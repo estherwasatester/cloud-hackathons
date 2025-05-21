@@ -91,3 +91,5 @@ environment:
 
   - label: Project ID
     reference: project.project_id
+  - label: Region
+    reference: project.gcp_region

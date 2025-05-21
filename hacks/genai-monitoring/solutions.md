@@ -29,14 +29,14 @@ Welcome to the coach's guide for Monitor GenAI apps with Firebase Genkit. Here y
 
 This goal of this challenge is to set up the app locally and test it out.
 
-All studetns should execute the step **Clone the Repository and set the environment variables** in their own Cloud accounts.
+All students should execute the step **Clone the Repository and set the environment variables** in their own Cloud accounts.
 
 There are couple of points where students may ask for your guidance:
 
 1. After cloning the repo, ensure Google Cloud credentials are set up correctly in each student's environment. The credentials are specified within `key.json` (this is configured by the `start_app.sh` script).
-1. Please be aware that the application's performance may be slow, particularly within the Qwiklab environment. We recommend that users do not concurrently interact with the same app.
-1. If you encounter issues such as no response or an extremely slow response, please try submitting the query again.
-1. Movie suggestions are _intentionally_ not saved. This functionality will be fixed in Challenge 2.
+2. Please be aware that the application's performance may be slow, particularly within the Qwiklab environment. We recommend that users do not concurrently interact with the same app.
+3. If you encounter issues such as no response or an extremely slow response, please try submitting the query again.
+4. Movie preferences are _intentionally_ not saved. This functionality will be fixed in Challenge 2.
 
 ## Challenge 2: Exploring Monitoring dashboard
 
