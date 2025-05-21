@@ -36,13 +36,7 @@ Why is this crucial? Because in the age of AI, those who can effectively monitor
 Welcome to the Movie Guru team! In your role as a Site Reliability Engineer on this team, you will work through the challenges to ensure that the app is reliable and performant.
 Your first task is to get the application running smoothly in your local environment. You'll set up your development environment using the Cloud Shell editor and interact with the initial version of the Movie Guru application, ensuring a stable starting point for the system.
 
-### Step 1: Firebase setup
-
-To use Firebase Genkit and Genkit Monitoring, you'll need to set up a web app in Firebase.
-
-- Go to the **Firebase Console** and create a new Firebase Web App in the _existing_ project.
-
-### Step 2: Clone the Repository and set the environment variables
+### Step 1: Clone the Repository and set the environment variables
 
 > **Note**: _All_ participants will need to do Step 2 in their own environments.
 
@@ -52,11 +46,12 @@ To use Firebase Genkit and Genkit Monitoring, you'll need to set up a web app in
 git clone https://github.com/MKand/movie-guru.git
 cd movie-guru
 git checkout ghack-genkit-monitoring
+git checkout main -- chat_server_go frontend nginx pgvector set_env_vars.sh 
 ```
 
-- Edit the **set_env_vars.sh** to replace _PROJECT_ID, _FIREBASE_API_KEY, and _FIREBASE_APP_ID_ values.
+- Edit the **set_env_vars.sh** to replace _PROJECT_ID, value.
 
-### Step 3: Run the app
+### Step 2: Run the app
 
 - Start the application on your cloud shell instance.
 
@@ -79,7 +74,7 @@ git checkout ghack-genkit-monitoring
   1. Configures Genkit.
   1. Defines prompts for interacting with the LLM.
 
-### Step 4: Test the app
+### Step 3: Test the app
 
 - Access the Movie Guru app on <http://localhost:8080> by clicking the **Web Preview** button on the top right of the Cloud Shell window and selecting "Preview on port 8080". The icon for Web Preview looks like the following.
 
@@ -96,7 +91,6 @@ git checkout ghack-genkit-monitoring
 
 ### Tips
 
-- You can find the firebase config values in the `Project Settings` page by clicking the settings cog next to `Project Overview` in the left-hand nav of the firebase console.
 - The **Movie Guru** app uses [dotprompt](https://firebase.google.com/docs/genkit/dotprompt#creating_prompt_files) to manage its prompt variants.
 - The **Movie Guru** app uses [flows](https://firebase.google.com/docs/genkit/flows) to encapsulate AI workflows.
 - **MovieGuru Application Architecture**:
@@ -110,7 +104,6 @@ git checkout ghack-genkit-monitoring
 ### Learning Resources
 
 - [Genkit](https://firebase.google.com/docs/genkit)
-- [Setting up firebase web app](https://firebase.google.com/docs/projects/use-firebase-with-existing-cloud-project#how-to-add-firebase_console)
 
 ## Challenge 2: Explore Firebase Genkit Monitoring
 
@@ -124,6 +117,7 @@ In this challenge, you'll explore Firebase Genkit Monitoring to understand the r
 
 Explore the Firebase Genkit Monitoring and understand the application's performance and execution. Navigate to the Genkit monitoring dashboard on the firebase console by selecting "Genkit" in the left-side panel under "AI" product category.
 
+1. Open the [firebase console](https://console.firebase.google.com/) and find the genkit metrics in the firebase project connected to the GCP project.
 1. **Assess overall health**: Based on this high-level view, what potential areas look like they might need attention?
 1. **Inspect by feature**: Identify individual GenAI _features_ in the app.
 1. **Find the critical path**: Isolate the feature that handles core user interactions. Analyze its metrics.
