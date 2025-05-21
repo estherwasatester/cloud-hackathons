@@ -38,7 +38,7 @@ Your first task is to get the application running smoothly in your local environ
 
 ### Step 1: Clone the Repository and set the environment variables
 
-> **Note**: _All_ participants will need to do Step 2 in their own environments.
+> **Note**: _All_ participants will need to do Step 1 in their own environments.
 
 - Open the **Cloud Shell Editor** and type the following commands.
 
@@ -49,7 +49,7 @@ git checkout ghack-genkit-monitoring
 git checkout main -- chat_server_go frontend nginx pgvector set_env_vars.sh 
 ```
 
-- Edit the **set_env_vars.sh** to replace _PROJECT_ID, value.
+- Edit the **set_env_vars.sh** to replace the _PROJECT_ID with your **Google Cloud** project's id.
 
 ### Step 2: Run the app
 
@@ -117,7 +117,7 @@ In this challenge, you'll explore Firebase Genkit Monitoring to understand the r
 
 Explore the Firebase Genkit Monitoring and understand the application's performance and execution. Navigate to the Genkit monitoring dashboard on the firebase console by selecting "Genkit" in the left-side panel under "AI" product category.
 
-1. Open the [firebase console](https://console.firebase.google.com/) and find the genkit metrics in the firebase project connected to the GCP project.
+1. Open the [firebase console](https://console.firebase.google.com/) and find the **Genkit Metrics** in the firebase project connected to the **current** _Google Cloud Platform_ project.
 1. **Assess overall health**: Based on this high-level view, what potential areas look like they might need attention?
 1. **Inspect by feature**: Identify individual GenAI _features_ in the app.
 1. **Find the critical path**: Isolate the feature that handles core user interactions. Analyze its metrics.
