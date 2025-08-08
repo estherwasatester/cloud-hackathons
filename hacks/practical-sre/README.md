@@ -57,11 +57,9 @@ Before we start our first day as SREs, we are going to start up metrics collecti
 - The cloud console terminal times-out after around 30 minutes of inactivity.
 
   ```sh
-  FRONTEND_ADDRESS=<your frontend address>
-  BACKEND_ADDRESS=<your backend address>
-  LOCUST_ADDRESS=<your locust address>
   PROJECT_ID=<your project id>
-  GKE_CONNECTION_STRING=<the GKE connection string> # Don't worry you don't need to have any GKE knowledge.
+  METRICS_APP_ADDRESS=<the metrics app address>
+  LOCUST_ADDRESS=<your locust address>
   ```
 
 #### Step 2: Generate Load on the Application
@@ -93,19 +91,14 @@ This challenge involves exploring the Movie Guru app and documenting typical use
 
 - **Access** and **Explore** the App
 
-  - Go to FRONTEND_ADDRESS in your web browser.
-  - Log in using your name or email. No password is required.
-  - Interact with the app to understand its features:
-    - Observe what happens after logging in.
-    - Request movie recommendations (e.g., "I feel like watching a fantasy movie").
-    - Express your preferences for genres and themes (e.g., "I love movies with funny animals," or "I dislike violent movies").
-    - Check your user profile to see if the app remembers your preferences.
-    - Log out and log in again to understand the app's behavior.
+  - Go to the Movie Guru app video [![**Movie Guru**](https://img.youtube.com/vi/l_KhN3RJ8qA/0.jpg)](https://youtu.be/l_KhN3RJ8qA) (with audio muted!)
+  - Pay attention to the use of the app to understand its features:
   
-> **Warning**: AI platform rate limits in qwiklabs environments can be very low. This might cause the app to fail when chatting with the bot (Oops.. Something went wrong). You can still use the backend to look at how the main page load/login process works, but view the chatbot interactions through this video (with sound turned down).
-
-[![**Movie Guru**](https://img.youtube.com/vi/l_KhN3RJ8qA/0.jpg)](https://youtu.be/l_KhN3RJ8qA)
-
+    - Observe what happens after logging in.
+    - The user expresses their movie recommendations (e.g., "I feel like watching a funny movie").
+    - The user expresses their preferences for genres and themes (e.g., "I love movies with funny animals," or "I dislike violent movies").
+    - The user checks their user profile to see if the app remembers their preferences.
+  
 - **Document User Journeys**
 
   - Identify at least two distinct user journeys within the **Movie Guru** app.
@@ -391,7 +384,8 @@ Run the following command in the **Cloud Shell terminal**.
 > **Note**: With this command we're priming the backend that generates metrics to behave in a specific way. You're simulating fixes made to the app after 1-2 months work.
 
 ```sh
-## Check if the BACKEND_ADDRESS env variable is set in your environment before you do this.
+## Check if the METRICS_APP_ADDRESS
+ env variable is set in your environment before you do this.
 
 curl -X POST \
   -H "Content-Type: application/json" \
@@ -421,7 +415,7 @@ curl -X POST \
   "PrefUpdateLatencyMinMS": 363,
   "PrefUpdateLatencyMaxMS": 645
 }' \
-$BACKEND_ADDRESS/phase 
+$METRICS_APP_ADDRESS/phase 
 ```
 
 ### Introduction
@@ -445,13 +439,13 @@ This challenge is about setting up **Achievable** Service Level Objectives (SLOs
     Use **Request Based** SLI calculations for now and NOT **window based**
 
    - Chat Latency:
-     - Metric: **movieguru_chat_latency_milliseconds_bucket** (look under the **prometheus targets > movieguru** section)
+     - Metric: **movieguru_chat_latency_bucket** (look under the **prometheus targets > movieguru** section).
    - Chat Engagement:
      - Metric: **movieguru_chat_outcome_counter_total** (Filter: **Outcome=Engaged**)
      - Remarks: Ideally we would like to use **Outcome=Engaged** and **Outcome=Acknowledged** to indicate that the user finds the response relevant, but we will stick to just **Engaged** for now.
      - [Optional] If you want to use a filter that incorporates both **Engaged** and **Acknowledged**, use the monitoring API to create the SLO (see example).
    - Main Page Load Latency:
-     - Metric: **movieguru_startup_latency_milliseconds_bucket** (measured at the **startup** endpoint)
+     - Metric: **movieguru_startup_latency_bucket** (measured at the **startup** endpoint)
    - Main Page Load Success Rate:
      - Metric: This requires finding the ratio of two metrics: **movieguru_startup_success_total** and **movieguru_startup_attempts_total**.
      - Remarks: Since the UI doesn't support combining metrics, you'll need to use the Cloud Monitoring API to define this SLO.
@@ -560,7 +554,7 @@ curl  --http1.1 --header "Authorization: Bearer ${ACCESS_TOKEN}" --header "Conte
 - Run this command in the terminal (**Cloud Shell terminal**). This simulates your app team making some changes to the app.
 
   ```sh
-  ## Check if the BACKEND_ADDRESS env variable is set in your environment before you do this.
+  ## Check if the METRICS_APP_ADDRESS env variable is set in your environment before you do this.
 
   curl -X POST \
     -H "Content-Type: application/json" \
@@ -590,7 +584,7 @@ curl  --http1.1 --header "Authorization: Bearer ${ACCESS_TOKEN}" --header "Conte
     "PrefUpdateLatencyMinMS": 363,
     "PrefUpdateLatencyMaxMS": 645
   }' \
-  $BACKEND_ADDRESS/phase
+  $METRICS_APP_ADDRESS/phase
   ```
 
 ### Introduction
@@ -666,7 +660,7 @@ kubectl apply -f <(curl -s https://raw.githubusercontent.com/MKand/movie-guru/re
   > **Note**: With this command we're priming the backend that generates metrics to behave in a specific way. This simulates your colleagues making some changes that might have broken/fixed a few things.
 
   ```sh
-  ## Check if the BACKEND_ADDRESS env variable is set in your environment before you do this.
+  ## Check if the METRICS_APP_ADDRESS env variable is set in your environment before you do this.
 
   curl -X POST \
     -H "Content-Type: application/json" \
@@ -696,7 +690,7 @@ kubectl apply -f <(curl -s https://raw.githubusercontent.com/MKand/movie-guru/re
     "PrefUpdateLatencyMinMS": 363,
     "PrefUpdateLatencyMaxMS": 645
   }' \
-  $BACKEND_ADDRESS/phase 
+  $METRICS_APP_ADDRESS/phase 
   ```
 
 ### Introduction

@@ -126,7 +126,7 @@ curl -X POST \
   "PrefUpdateLatencyMinMS": 463,
   "PrefUpdateLatencyMaxMS": 745
 }' \
-$BACKEND_ADDRESS/phase 
+$METRICS_APP_ADDRESS/phase 
 ```
 
 #### Getting Started
@@ -369,7 +369,7 @@ Here is the command for it that needs to be run in a terminal to create all the 
 ```sh
 ## Make sure the env variable PROJECT_ID is set.
 
-## Unique Service ID of an existing service
+## Unique Service ID of an existing service. Found on Service details section of the custom service dashboard.
 SERVICE_ID=<service UNIQUE id>
 
 ## Get an access token
@@ -411,7 +411,6 @@ STARTUP_LATENCY_SLO_POST_BODY=$(cat <<EOF
               "min": -1000,
               "max": 1000
             }
-          
         },
       }
     }
