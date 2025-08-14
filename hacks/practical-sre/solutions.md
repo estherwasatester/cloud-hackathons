@@ -501,7 +501,7 @@ Analyze error budget: Discuss the "Startup Success Rate" SLO's error budget, its
   Before diving into this challenge, you'll need to orchestrate a bit of controlled chaos:
 
   1. **Fake Backend Manipulation:**  Instruct the students to configure the **fake backend** with a probability distribution that simulates excellent performance. This should push all SLOs into the "good" region, creating a false sense of stability.
-  2. **Frontend Sabotage:**  Have the students introduce a sneaky change to the frontend code that causes 50% of the calls to the backend to fail. This will create a noticeable impact on user experience while leaving the backend metrics untouched.
+  2. **Frontend Sabotage:**  Here the developers (imaginary) introduce a change to the frontend code that causes 50% of the calls to the backend to fail. This will create a noticeable impact on user experience while leaving the backend metrics untouched.
 
 - **The Illusion of Perfection**
 

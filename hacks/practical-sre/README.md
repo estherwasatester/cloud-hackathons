@@ -34,8 +34,9 @@ In this hack you will learn how to:
 ## Prerequisites
 
 - Your own GCP project with Editor IAM role.
-- `kubectl` command line tool
 - `gcloud` command line tool
+- `curl` command line tool
+
 - **Note** We recommend using the Cloud Shell to run the challenges as it has all the necessary tooling already installed.
 
 ## Contributors
@@ -59,12 +60,12 @@ Before we start our first day as SREs, we are going to start up metrics collecti
   ```sh
   PROJECT_ID=<your project id>
   METRICS_APP_ADDRESS=<the metrics app address>
-  LOCUST_ADDRESS=<your locust address>
+  LOCUST_ADDRESS=<your load generator address>
   ```
 
 #### Step 2: Generate Load on the Application
 
-- Open your browser and navigate to the Locust load generator address ($LOCUST_ADDRESS). You should see a screen similar to the one below:
+- Open your browser and navigate to the Locust Load Generator address ($LOCUST_ADDRESS). You should see a screen similar to the one below:
 
    ![locust start screen](images/locust-startscreen.png)
 
@@ -72,10 +73,10 @@ Before we start our first day as SREs, we are going to start up metrics collecti
 
   - Number of users at peak: 5
   - Spawn rate: 0.05
-  - Host: <http://mockserver-service.movie-guru.svc.cluster.local>
+  - Host: <METRICS_APP_ADDRESS> (the default value in the locust app should already point to this address)
   - Runtime: 7h (under Advanced options)
   
-   This configuration will gradually increase the load on the backend, spawning around 3 simulated users over the course of 7 hours.
+   This configuration will gradually increase the load on the backend, spawning around 5 simulated users over the course of 7 hours.
 
 - Once the load test begins, Locust will swarm various backend endpoints, simulating traffic as users interact with the application. You should see something similar to this:
 
@@ -194,7 +195,7 @@ Steps:
 
 Your second day as an SRE at **The Movie Advisory Company** started with a bang. The CEO, clearly fueled by an excessive amount of coffee, stormed into your workspace, ranting about Movie Guru's unreliable performance.  **"Users are complaining about the site not always being reachable!" he yelled, "This is unacceptable! Movie Guru needs to be up 100% of the time!"** He demanded a solution immediately. With a panicked look in his eyes, he pointed you towards the platform team (a single, overworked engineer) and the application team (known for their eccentric work habits).
 
-Your challenge:  figure out how to improve the app's stability, manage the CEO's expectations, and prevent a complete meltdown. Welcome to the world of SRE!
+Your challenge: Figure out how to improve the app's stability, manage the CEO's expectations, and prevent a complete meltdown. Welcome to the world of SRE!
 
 ### Description
 
@@ -282,11 +283,11 @@ The addition of "measured over a 30-day rolling window" specifies the timeframe 
 
 ### Introduction
 
-The platform team introduces you to the app's monitoring dashboards in the Google Cloud Console.
+The platform team introduces you to the app's Custom Monitoring Dashboards in the Google Cloud Console.
 The platform team's dashboards use metrics collected from the **movie-guru backend service**.
 
 - **Login Dashboard**: Tracks the health and efficiency of the user login process.
-- **Main Page Load Dashboard/ Startup Dashboard**: Monitors the performance of the post-login, **Main Page Load**.
+- **Startup Dashboard**: Monitors the performance of the post-login, **Main Page Load**.
 - **Chat Dashboard**: Provides a comprehensive view of user interactions with the chatbot, including engagement, sentiment, and response times.
 
 > **Note**: Metrics in the dashboards may appear blocky because we’re simulating load with only a few users. Achieving smoother graphs generally requires a larger user load.
@@ -295,8 +296,7 @@ The platform team's dashboards use metrics collected from the **movie-guru backe
 
 **Make guesses for this exercise whenever you don't have real information to go on.**
 
-1. **Browse existing dashboards**
-   - Find them at **Google Cloud Monitoring \> Dashboards \> Custom Dashboards**.  
+1. **Browse the existing dashboards**
 1. **Assess user experience**
      - Based on the metrics and your own experience, describe how users likely perceive the app's performance.  
 1. Note down which aspects of the app need serious improvement.
@@ -308,7 +308,7 @@ The platform team's dashboards use metrics collected from the **movie-guru backe
      - Example Latency SLI: The latency of `service abc`, measured by the `metric x`, is tracked as a histogram at the 10th, 50th, 90th, and 99th percentiles.
    - **Tips**:
      - Look at the [Business Goals](#business-goals) below to narrow down your search to just a few SLIs relevant for this and the upcoming exercises.
-     - If you aren't sure of the difference between an **SLI** and a **metric**, look [here](#how-do-metrics-differ-from-slis).
+     - If you aren't sure of the difference between an **SLI** and a **metric**, look at how [metrics differ from SLIs](#how-do-metrics-differ-from-slis).
 
 #### Business goals
 
@@ -643,18 +643,6 @@ Burn rate measures how quickly you're using up your error budget.  It acts as an
 
 ### Prerequisites
 
-- Connect to the GKE cluster from the **Cloud Shell terminal** by pasting the following command.
-
-```sh
-$GKE_CONNECTION_STRING ## This should print out the connection string command that will give your terminal credentials to connect to the GKE cluster
-```
-
-- Deploy a new frontend version (your devs have made a change and you want to have a new version running alongside the old one)
-
-```sh
-kubectl apply -f <(curl -s https://raw.githubusercontent.com/MKand/movie-guru/refs/heads/ghack-sre/k8s/frontend-v2.yaml)
-```
-
 - Reset the backend server
 
   > **Note**: With this command we're priming the backend that generates metrics to behave in a specific way. This simulates your colleagues making some changes that might have broken/fixed a few things.
@@ -699,14 +687,12 @@ kubectl apply -f <(curl -s https://raw.githubusercontent.com/MKand/movie-guru/re
 
 *"Mayday! Mayday!"* they exclaim, bursting into your cubicle. "*Users are reporting that Movie Guru is acting up! They can't seem to use the website properly!*"
 
+You and your colleagues decide to see what is wrong by navigating to the **movie guru** website. You notice that approximately 50% of your chat messages fail.
+
 ### Description
 
 - Look at your SLO dashboards to spot issues (wait a few minutes before you check).
-
-- Investigate the Issue:
-  - To get to the bottom of this mystery, open a new **incognito/private** browser window and navigate to the Movie Guru frontend.
-  - Refresh the page a few times and see if you spot something wrong.
-- Compare your observations with the data displayed on the dashboards. What discrepancies do you notice?
+- Compare your observation (when visiting the website) with the data displayed on the dashboards. What discrepancies do you notice?
 - Explain the reason for the difference between what users are reporting and what the dashboards are showing.
 - How can you improve your monitoring to better reflect the actual user experience?
 
